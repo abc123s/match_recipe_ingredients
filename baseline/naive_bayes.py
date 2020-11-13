@@ -1,3 +1,4 @@
+# adapted from problem set 2
 import numpy as np
 import json
 from sklearn.naive_bayes import MultinomialNB
