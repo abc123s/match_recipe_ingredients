@@ -41,5 +41,5 @@ def preprocess(examples):
     test_dataset = tf.data.Dataset.from_generator(example_generator,
                                                   output_types=((tf.int32, tf.int32, tf.int32), tf.int32))
 
-    return test_dataset.batch(5), word_encoder.vocab_size
+    return test_dataset.batch(128), word_encoder.vocab_size
 

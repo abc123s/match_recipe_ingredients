@@ -81,7 +81,7 @@ model, loss = build_model(
     word_embedding_size = WORD_EMBEDDING_SIZE,
     sentence_embedding_size = SENTENCE_EMBEDDING_SIZE,
     embedding_architecture = EMBEDDING_ARCHITECTURE,
-    triplet_margin = 0.2
+    triplet_margin = TRIPLET_MARGIN
 )
 
 model.summary()

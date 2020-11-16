@@ -18,9 +18,9 @@ def build_model(
         architecture = embedding_architecture,
     )
 
-    anchor = keras.layers.Input(shape=(50,))
-    positive = keras.layers.Input(shape=(50,))
-    negative = keras.layers.Input(shape=(50,))
+    anchor = keras.layers.Input(shape=(50,), name = 'anchor')
+    positive = keras.layers.Input(shape=(50,), name = 'positive')
+    negative = keras.layers.Input(shape=(50,), name = 'negative')
 
     anchor_embedding = embedding(anchor)
     positive_embedding = embedding(positive)
