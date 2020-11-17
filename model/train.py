@@ -6,8 +6,9 @@ import json
 import tensorflow as tf
 from tensorflow import keras
 
-from preprocessing.preprocess import preprocess
+from preprocessing.preprocess import preprocess_train
 from model.model import build_model
+from evaluate import evaluate
 
 TRAINING_EXAMPLE_TYPE = "offline_full"
 training_example_directories = {
@@ -78,3 +79,9 @@ with open(experiment_dir + "/params.json", "w") as f:
 
 # save model weights for later usage
 model.save_weights(experiment_dir + "/model_weights")
+
+# evaluate model and save metrics:
+evaluation = evaluate(model)
+
+with open(experiment_dir + "/results.json", "w") as f:
+    json.dump(evaluation, f, indent=4)

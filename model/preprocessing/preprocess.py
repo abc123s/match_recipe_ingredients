@@ -24,8 +24,8 @@ def truncate_or_pad(example):
     else:
         return example + [0] * (50 - len(example))
 
-# convert examples into batch
-def preprocess(examples):
+# convert triplet training examples into batch
+def preprocess_train(examples):
     def example_generator():
         for anchor, positive, negative in examples:
             encoded_anchor = word_encoder.encode(anchor)
@@ -43,3 +43,9 @@ def preprocess(examples):
 
     return test_dataset.batch(128), word_encoder.vocab_size
 
+# convert list of raw test examples into format
+# that embedding predict on 
+def preprocess_test(examples):
+    encoded_examples = [truncate_or_pad(word_encoder.encode(example)) for example in examples]
+
+    return tf.constant(encoded_examples)
