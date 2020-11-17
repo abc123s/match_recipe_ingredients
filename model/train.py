@@ -9,58 +9,16 @@ from tensorflow import keras
 from preprocessing.preprocess import preprocess
 from model.model import build_model
 
-dataset, vocab_size = preprocess([
-[
-    'white rice',
-    '1 cup white rice, cooked',
-    '1 cup brown rice, cooked',
-],
-[
-    'chicken breast',
-    '1 pound chicken breast, skinless',
-    '3 pounds chicken thigh or chicken drumsticks',
-],
-[
-    'white rice',
-    '1 cup white rice, cooked',
-    '1 cup brown rice, cooked',
-],
-[
-    'chicken breast',
-    '1 pound chicken breast, skinless',
-    '3 pounds chicken thigh or chicken drumsticks',
-],
-[
-    'white rice',
-    '1 cup white rice, cooked',
-    '1 cup brown rice, cooked',
-],
-[
-    'chicken breast',
-    '1 pound chicken breast, skinless',
-    '3 pounds chicken thigh or chicken drumsticks',
-],
-[
-    'white rice',
-    '1 cup white rice, cooked',
-    '1 cup brown rice, cooked',
-],
-[
-    'chicken breast',
-    '1 pound chicken breast, skinless',
-    '3 pounds chicken thigh or chicken drumsticks',
-],
-[
-    'white rice',
-    '1 cup white rice, cooked',
-    '1 cup brown rice, cooked',
-],
-[
-    'chicken breast',
-    '1 pound chicken breast, skinless',
-    '3 pounds chicken thigh or chicken drumsticks',
-]
-])
+TRAINING_EXAMPLE_TYPE = "offline_full"
+training_example_directories = {
+    "offline_full": "data/fullIngredientPhraseTripletExamples.json",
+    "offline_name_only": "data/ingredientNameOnlyTripletExamples.json"
+}
+
+with open(os.path.join(os.path.dirname(__file__), training_example_directories[TRAINING_EXAMPLE_TYPE])) as training_examples_data:
+    training_examples = json.load(training_examples_data)    
+
+dataset, vocab_size = preprocess_train(training_examples)
 
 # hyperparameters
 # model structure
@@ -112,6 +70,7 @@ with open(experiment_dir + "/params.json", "w") as f:
             "EMBEDDING_ARCHITECTURE": EMBEDDING_ARCHITECTURE,
             "TRIPLET_MARGIN": TRIPLET_MARGIN,
             "OPTIMIZER": OPTIMIZER,
+            "TRAINING_EXAMPLE_TYPE": TRAINING_EXAMPLE_TYPE,
             "EPOCHS": EPOCHS,
         },
         f,
