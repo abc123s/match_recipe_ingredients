@@ -10,10 +10,12 @@ from preprocessing.preprocess import preprocess_train
 from model.model import build_model
 from evaluate import evaluate
 
-TRAINING_EXAMPLE_TYPE = "offline_full"
+TRAINING_EXAMPLE_TYPE = "offline_full_v2"
 training_example_directories = {
     "offline_full": "data/fullIngredientPhraseTripletExamples.json",
-    "offline_name_only": "data/ingredientNameOnlyTripletExamples.json"
+    "offline_full_v2": "data/fullIngredientPhraseTripletExamples_v2.json",
+    "offline_name_only": "data/ingredientNameOnlyTripletExamples.json",
+    "offline_name_only_v2": "data/ingredientNameOnlyTripletExamples_v2.json"
 }
 
 with open(os.path.join(os.path.dirname(__file__), training_example_directories[TRAINING_EXAMPLE_TYPE])) as training_examples_data:
@@ -23,7 +25,7 @@ dataset, vocab_size = preprocess_train(training_examples)
 
 # hyperparameters
 # model structure
-WORD_EMBEDDING_SIZE = 128
+WORD_EMBEDDING_SIZE = 64
 SENTENCE_EMBEDDING_SIZE = 64
 EMBEDDING_ARCHITECTURE = 'simple'
 
