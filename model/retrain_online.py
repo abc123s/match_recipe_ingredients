@@ -3,6 +3,7 @@ import os
 import random
 from datetime import datetime
 import subprocess
+import math
 
 import numpy as np
 
@@ -37,9 +38,9 @@ os.mkdir(experiment_dir)
 # hyperparameters for re-training
 ORIGINAL_EXPERIMENT_DIR = "experiments/20201117_1620_f71c4fe"
 RETRAINING_METHOD = "online_hard_triplet_mining"
-RETRAINING_EPOCHS = 5
-INGREDIENT_IDS_PER_BATCH = 30
-RETRAINING_STEPS_PER_EPOCH = 5# ceil(len(ingredient_dictionary.keys()) / INGREDIENT_IDS_PER_BATCH)
+RETRAINING_EPOCHS = 20
+INGREDIENT_IDS_PER_BATCH = 60
+RETRAINING_STEPS_PER_EPOCH = math.ceil(len(ingredient_dictionary.keys()) / INGREDIENT_IDS_PER_BATCH)
 
 # load original experiment params
 with open(ORIGINAL_EXPERIMENT_DIR + "/params.json", "r") as f:
