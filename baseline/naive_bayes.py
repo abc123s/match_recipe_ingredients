@@ -100,38 +100,41 @@ def transform_text(messages, word_dictionary):
     # *** END CODE HERE ***
 
 def main():
-    with open('./naiveBayes.json') as f:
-        data = json.load(f)
+    with open('./naiveBayesTrain.json') as train_file:
+        train_data = json.load(train_file)
 
-        train = data[0:1500]
-        test = data[1500:]
+    with open('./naiveBayesDev.json') as test_file:
+        test_data = json.load(test_file)
 
-        print(test[0:5])
+    train_messages = []
+    train_labels = []
+    for example in train_data:
+        train_messages.append(example['text'])
+        train_labels.append(int(example['label']))
 
-        train_messages = []
-        train_labels = []
-        for example in train:
-            train_messages.append(example['text'])
-            train_labels.append(int(example['label']))
-
-        test_messages = []
-        test_labels = []
-        for example in test:
-            test_messages.append(example['text'])
-            test_labels.append(int(example['label']))
+    test_messages = []
+    test_labels = []
+    for example in test_data:
+        test_messages.append(example['text'])
+        test_labels.append(int(example['label']))
 
 
-        dictionary = create_dictionary(train_messages)
-        train_matrix = transform_text(train_messages, dictionary)
-        test_matrix = transform_text(test_messages, dictionary)
+    dictionary = create_dictionary(train_messages)
+    train_matrix = transform_text(train_messages, dictionary)
+    test_matrix = transform_text(test_messages, dictionary)
 
-        clf = MultinomialNB()
-        clf.fit(train_matrix, train_labels)
-        
-        test_predicts = clf.predict(test_matrix)
-        print(len(test_predicts))
-        print(len(test_labels))
-        print(np.sum(test_predicts == test_labels))
+    clf = MultinomialNB()
+    clf.fit(train_matrix, train_labels)
+    
+    train_predicts = clf.predict(train_matrix)
+    train_correct = np.sum(train_predicts == train_labels)
+    train_total = len(train_predicts)
+    print('train accuracy: ', train_correct / train_total)
+
+    test_predicts = clf.predict(test_matrix)
+    test_correct = np.sum(test_predicts == test_labels)
+    test_total = len(test_predicts)
+    print('test accuracy: ', test_correct / test_total)
 
 
 if __name__ == "__main__":
